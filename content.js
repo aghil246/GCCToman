@@ -36,10 +36,17 @@
   const CURRENCIES = [
     { code: "AED", defaultRate: 63500, symbols: ["AED", "د.إ"], localWords: ["درهم"] },
     { code: "KWD", defaultRate: 760000, symbols: ["KWD", "KD", "د.ك"], localWords: ["دينار"] },
+    {
+      code: "OMR",
+      // Starting point only; set the current market rate in the popup.
+      defaultRate: 700000,
+      symbols: ["OMR", "ر.ع."],
+      localWords: ["ريال", "ريال عماني"],
+    },
   ];
 
   // Country subdomain -> currency used on that OpenSooq site.
-  const COUNTRY_CURRENCY = { ae: "AED", kw: "KWD" };
+  const COUNTRY_CURRENCY = { ae: "AED", kw: "KWD", om: "OMR" };
 
   function detectCountry() {
     const host = location.hostname.toLowerCase();

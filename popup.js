@@ -6,11 +6,12 @@
   const CURRENCIES = [
     { code: "AED", sample: 130000, defaultRate: 63500 },
     { code: "KWD", sample: 500, defaultRate: 760000 },
+    { code: "OMR", sample: 500, defaultRate: 700000 },
   ];
   const RATES_KEY = "dztRates";
   const LAST_FETCH_KEY = "dztLastFetch";
-  // Navasan.net publishes its live Toman rates as JSON; the AED/KWD keys are
-  // the lower-case currency codes.
+  // Navasan.net publishes its live Toman rates as JSON under lower-case
+  // currency codes (aed, kwd, omr).
   const NAVASAN_URL = "https://www.navasan.net/last_currencies.php";
   const nf = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
 
@@ -118,7 +119,7 @@
         updatePreview(c.code);
         found++;
       }
-      if (!found) throw new Error("no AED/KWD rates in response");
+      if (!found) throw new Error("no AED/KWD/OMR rates in response");
 
       lastFetchAt = Date.now();
       chrome.storage.sync.set({ [LAST_FETCH_KEY]: lastFetchAt });

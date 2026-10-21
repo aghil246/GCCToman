@@ -4,7 +4,7 @@ A Chrome extension (Manifest V3) that adds the Iranian **Toman** equivalent of
 foreign prices on Dubizzle, OpenSooq and 4Sale listing cards and product/detail
 pages.
 
-It is **multi-currency**: each currency has its own rate, so AED and KWD can be
+It is **multi-currency**: each currency has its own rate, so AED, KWD and OMR can be
 set independently — either typed in by hand or pulled live from
 [Navasan.net](https://www.navasan.net/) with one click.
 
@@ -15,13 +15,14 @@ set independently — either typed in by hand or pulled live from
 | Dubizzle — AED | `AED 130,000` | 63,500 | `8,255,000,000 Toman` |
 | OpenSooq AE — AED | `9,990 AED` | 63,500 | `634,365,000 Toman` |
 | OpenSooq KW — KWD | `1,350 دينار` | 760,000 | `1,026,000,000 Toman` |
+| OpenSooq OM — OMR | `15,600 OMR` | 700,000 | `10,920,000,000 Toman` |
 | 4Sale — KWD | `KWD 2,000` | 760,000 | `1,520,000,000 Toman` |
 | 4Sale — KWD (K = thousand) | `26.50 K KWD` | 760,000 | `20,140,000,000 Toman` |
 
 Works on:
 
 - `*.dubizzle.com` (AED)
-- `*.opensooq.com` — UAE (AED), Kuwait (KWD), and any other country whose
+- `*.opensooq.com` — UAE (AED), Kuwait (KWD), Oman (OMR), and any other country whose
   currency is listed below
 - `*.q84sale.com` (KWD)
 
@@ -34,11 +35,12 @@ currency in Toman**.
 | --- | --- | --- |
 | AED | `AED`, `د.إ`, `درهم` (UAE site) | 63,500 |
 | KWD | `KWD`, `KD`, `د.ك`, `دينار` (Kuwait site) | 760,000 |
+| OMR | `OMR`, `ر.ع.`, `ريال`, `ريال عماني` (Oman site) | 700,000 |
 
-Arabic-Indic digits (`١٬٣٥٠ دينار`) and Arabic separators are understood too.
+Arabic-Indic digits (`١٬٣٥٠ دينار`, `٢٬٥٥٠ ريال`) and Arabic separators are understood too.
 
 Only these currencies are converted; other currencies on OpenSooq (SAR, EGP,
-KWD-only sites, etc.) are left alone. The defaults are just starting points —
+etc.) are left alone. The defaults are just starting points —
 change them to your market rate.
 
 ## Install (unpacked)
@@ -46,15 +48,15 @@ change them to your market rate.
 1. Open `chrome://extensions` in Chrome.
 2. Turn on **Developer mode** (top right).
 3. Click **Load unpacked** and select this folder.
-4. Pin the extension and open it. Click **Update Price** to pull the live AED
-   and KWD rates from Navasan.net, or type your own values.
+4. Pin the extension and open it. Click **Update Price** to pull the live AED,
+   KWD and OMR rates from Navasan.net, or type your own values.
 5. Visit any Dubizzle or OpenSooq page — each recognised price gets a green
    Toman line.
 
 ## Usage
 
-- **Update Price** — fetches the live AED and KWD rates (in Toman) from
-  [Navasan.net](https://www.navasan.net/) and fills both fields at once. The line
+- **Update Price** — fetches the live AED, KWD and OMR rates (in Toman) from
+  [Navasan.net](https://www.navasan.net/) and fills all fields at once. The line
   under the button shows when the rates were last fetched. If Navasan cannot be
   reached, your saved values are kept and a red message is shown.
 - **Manual rates** — one field per currency (`1 AED = … Toman`,
@@ -68,8 +70,8 @@ change them to your market rate.
 
 The popup's **Update Price** button requests
 `https://www.navasan.net/last_currencies.php`, which returns live Toman rates as
-JSON under the lower-case currency codes (`aed`, `kwd`). The values are written
-into the two rate fields, saved, and applied to every open tab.
+JSON under the lower-case currency codes (`aed`, `kwd`, `omr`). The values are
+written into the rate fields, saved, and applied to every open tab.
 
 - The fetch happens in the popup (extension) context, so it needs host access to
   `navasan.net` (already declared in `manifest.json`).
@@ -84,7 +86,7 @@ into the two rate fields, saved, and applied to every open tab.
 `content.js` recognises every way the sites render a price:
 
 - **`AED 130,000`** (currency first) — Dubizzle cards.
-- **`9,990 AED`** / **`500 KWD`** / **`9,990AED`** (number first).
+- **`9,990 AED`** / **`500 KWD`** / **`15,600 OMR`** / **`9,990AED`** (number first).
 - **`AED` + `44,999` in separate nodes** (newer Dubizzle markup).
 - Kuwaiti decimals such as **`1,250.500 KWD`**.
 - 4Sale's **"K" thousands shorthand**: **`26.50 K KWD`** is 26,500 KWD, and
@@ -123,7 +125,7 @@ navigation and infinite scroll. Rates are stored with `chrome.storage.sync`.
 ## Adding a currency
 
 1. Add an entry to `CURRENCIES` in `content.js`:
-   `{ code: "SAR", defaultRate: 20000, aliases: ["SAR", "ر.س"] }`
+   `{ code: "SAR", defaultRate: 20000, symbols: ["SAR", "ر.س"], localWords: [] }`
 2. Add the same entry to `CURRENCIES` in `popup.js` (with a `sample` value for
    the preview), e.g. `{ code: "SAR", sample: 5000, defaultRate: 20000 }`.
 3. Reload the extension.

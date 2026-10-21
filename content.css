@@ -1,0 +1,42 @@
+/* Dubizzle Toman Price - injected price line */
+
+.dzt-toman-price {
+  display: block;
+  box-sizing: border-box;
+  max-width: 100%;
+  margin: 2px 0 0 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.1px;
+  color: #0b7a4b;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  direction: ltr;
+  unicode-bidi: isolate;
+  cursor: default;
+}
+
+/* A slightly softer variant used on large detail-page prices */
+.dzt-toman-price--detail {
+  color: #0b7a4b;
+  margin-top: 4px;
+}
+
+/*
+ * 4Sale cards float a "Like it" reactions bar over the bottom of the card
+ * content, and reserve a strip for it. The injected Toman line uses that strip,
+ * so the bar ends up painted on top of the price line. Reserve extra room and
+ * keep the price row top-aligned so the line stays clear of the bar.
+ */
+.dzt-card .dzt-content {
+  padding-bottom: 26px !important;
+}
+
+.dzt-card .dzt-price-row {
+  align-items: flex-start !important;
+}
+

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Toman Price</title>
+    <link rel="stylesheet" href="../popup.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="brand">
+        <span class="brand-mark">T</span>
+        <div class="brand-text">
+          <strong>Toman Price</strong>
+          <span>AED &amp; KWD &rarr; Toman</span>
+        </div>
+      </div>
+      <label class="switch" title="Turn the price line on or off">
+        <input type="checkbox" id="enabled" />
+        <span class="slider"></span>
+      </label>
+    </header>
+
+    <main class="body">
+      <div class="source">
+        <button class="update-btn" id="update" type="button">
+          <svg class="update-icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-8 8s3.58 8 8 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"
+            />
+          </svg>
+          <span class="update-label">Update Price</span>
+        </button>
+        <p class="source-meta">
+          <span class="source-name">Navasan.net</span>
+          <span class="update-status" id="update-status">not fetched yet</span>
+        </p>
+      </div>
+
+      <div id="rates" class="rates"></div>
+      <p class="hint" id="hint">Set the rate for each currency you use.</p>
+
+      <div class="preview">
+        <span class="preview-label">Preview</span>
+        <div id="previews" class="previews"></div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <span class="saved" id="saved">Saved</span>
+      <span class="footer-note">dubizzle.com &amp; opensooq.com</span>
+    </footer>
+
+    <script>
+window.chrome = {
+  storage: {
+    sync: {
+      _v: { dztEnabled: true, dztRates: { AED: 63500, KWD: 760000 } },
+      get(d, cb) { cb(Object.assign({}, d, this._v)); },
+      set(p, cb) { Object.assign(this._v, p); if (cb) setTimeout(cb, 150); }
+    },
+    onChanged: { addListener() {} }
+  }
+};
+</script>
+<script src="../popup.js"></script>
+  </body>
+</html>

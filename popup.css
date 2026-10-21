@@ -362,6 +362,12 @@ body {
 .footer-note {
   font-size: 11px;
   color: var(--muted);
+  text-decoration: none;
+}
+
+.footer-note:hover {
+  color: var(--green-dark);
+  text-decoration: underline;
 }
 
 body.disabled .body,
